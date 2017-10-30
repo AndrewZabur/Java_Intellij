@@ -4,3 +4,8 @@ gradle
 out
 gradlew
 gradlew.bat
+Bus.txt
+Bus.json
+Bus.xml
+Garage.xml
+Garage.json
