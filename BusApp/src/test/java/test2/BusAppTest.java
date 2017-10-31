@@ -6,7 +6,6 @@ import lab2.Bus;
 import lab2.Garage;
 import lab2.GarageApp;
 import lab2.Bus.Model;
-
 import static org.testng.Assert.assertEquals;
 
 import java.time.LocalDate;

@@ -11,7 +11,13 @@ public class BusApp {
 
     public static void main(String[] args) throws IOException{
 
-        Bus obj = new Bus(5, "AH8790UN", LocalDate.of(1997, 01, 10), Bus.Model.AUDI);
+        Bus obj = new BusBuilder()
+                .setCapacity(12)
+                .setIdentificationNumder("IO0989KJ")
+                .setDataConstruction(LocalDate.of(1998,12,12))
+                .setModel(Bus.Model.NISSAN)
+                .build();
+
         Serializing<Bus> busXml = new SerializeBusXml();
         FileWriter fw = new FileWriter("Bus.xml");
         busXml.serializingObj(obj, fw);

@@ -1,13 +1,9 @@
 package lab2.serialize;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import com.thoughtworks.xstream.XStream;
 import lab2.Bus;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
 

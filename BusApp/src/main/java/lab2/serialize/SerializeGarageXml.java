@@ -4,7 +4,6 @@ import com.thoughtworks.xstream.XStream;
 import lab2.Garage;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
 
