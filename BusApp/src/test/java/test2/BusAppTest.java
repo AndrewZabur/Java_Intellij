@@ -1,5 +1,8 @@
 package test2;
 
+import lab2.GarageService;
+import lab2.serialize.SerializeBusXml;
+import lab2.serialize.Serializing;
 import org.testng.annotations.Test;
 
 import lab2.Bus;
@@ -8,6 +11,9 @@ import lab2.GarageApp;
 import lab2.Bus.Model;
 import static org.testng.Assert.assertEquals;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -29,7 +35,8 @@ public class BusAppTest {
     Garage garage = new Garage();
     /*GrageApp*/
     GarageApp garages1 = new GarageApp();
-/////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This test will check the capacity of the bus.
      * @return
@@ -104,20 +111,14 @@ public class BusAppTest {
         buses.add(obj4);
         buses.add(obj5);
 
-
         garage.setBuses(buses);
 
-
         return new Object[][] { {garage, 59, true}, {garage, 100, false}, {garage, 68, true} };
-
-
     }
 
     @Test(dataProvider = "companyInfoProvider")
     public void testInfoCompany(Garage garage, int company, boolean result) {
-
         assertEquals(garage.companyOfPeople(company),result);
-
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,12 +173,9 @@ public class BusAppTest {
         tmpGarage3.add(gar2);
         tmpGarage3.add(gar3);
 
-
         garages1.setGarages(garages);
 
-
         return new Object[][] { {garages1, 31, tmpGarage1}, {garages1, 55, tmpGarage2}, {garages1, 27, tmpGarage3 } };
-
     }
 
     @Test(dataProvider = "garageProvider")
@@ -193,16 +191,167 @@ public class BusAppTest {
 
     @DataProvider
     public Object[][] regularExpProvider() {
-
         return new Object[][] { { "AH8790UN",  true}, {"BU3185QG", true}, {"ZA5334BUR", false}, {"QWE1243UT", false}, {"ER09871PO", false}};
-
     }
 
     @Test(dataProvider = "regularExpProvider")
     public void reagularExpTest(String input, boolean check) {
-
         assertEquals(new Bus().regularExpIdentificationNumber(input), check);
-
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] garageCapacityProvider(){
+
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+
+        bus3.add(obj8);
+        bus3.add(obj9);
+        bus3.add(obj10);
+
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+        Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+
+        GarageService gars1 = new GarageService(gar1);
+        GarageService gars2 = new GarageService(gar2);
+        GarageService gars3 = new GarageService(gar3);
+
+        return new Object[][]{{gars1, 57},{gars2, 31},{gars3, 28}};
+    }
+
+    @Test(dataProvider = "garageCapacityProvider")
+    public void garageCapacityTest(GarageService garageService, int  check) {
+        assertEquals(garageService.garageCapacity(), check);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] garageServiceCompanyProvider(){
+    ArrayList<Bus> bus1 = new ArrayList<Bus>();
+    ArrayList<Bus> bus2 = new ArrayList<Bus>();
+    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+    bus1.add(obj1);
+    bus1.add(obj2);
+    bus1.add(obj3);
+    bus1.add(obj4);
+
+    bus2.add(obj5);
+    bus2.add(obj6);
+    bus2.add(obj7);
+
+    bus3.add(obj8);
+    bus3.add(obj9);
+    bus3.add(obj10);
+
+    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+
+    GarageService gars1 = new GarageService(gar1);
+    GarageService gars2 = new GarageService(gar2);
+    GarageService gars3 = new GarageService(gar3);
+
+    return new Object[][]{{gars1, 55, true},{gars2, 32, false},{gars3, 30, false}};
+}
+
+    @Test(dataProvider = "garageServiceCompanyProvider")
+    public void garageServiceCompanyTest(GarageService garageService, int company, boolean  check) {
+        assertEquals(garageService.companyOfPeople(company), check);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] garageServiceMaxProvider(){
+    ArrayList<Bus> bus1 = new ArrayList<Bus>();
+    ArrayList<Bus> bus2 = new ArrayList<Bus>();
+    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+    bus1.add(obj1);
+    bus1.add(obj2);
+    bus1.add(obj3);
+    bus1.add(obj4);
+
+    bus2.add(obj5);
+    bus2.add(obj6);
+    bus2.add(obj7);
+
+    bus3.add(obj8);
+    bus3.add(obj9);
+    bus3.add(obj10);
+
+    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+
+    GarageService gars1 = new GarageService(gar1);
+    GarageService gars2 = new GarageService(gar2);
+    GarageService gars3 = new GarageService(gar3);
+
+    return new Object[][]{{gars1, 35},{gars2, 17},{gars3, 15}};
+}
+
+    @Test(dataProvider = "garageServiceMaxProvider")
+    public void garageServiceMaxTest(GarageService garageService, int max) {
+        assertEquals(garageService.findBiggestCapacity(), max);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] garageServiceMinProvider(){
+    ArrayList<Bus> bus1 = new ArrayList<Bus>();
+    ArrayList<Bus> bus2 = new ArrayList<Bus>();
+    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+    bus1.add(obj1);
+    bus1.add(obj2);
+    bus1.add(obj3);
+    bus1.add(obj4);
+
+    bus2.add(obj5);
+    bus2.add(obj6);
+    bus2.add(obj7);
+
+    bus3.add(obj8);
+    bus3.add(obj9);
+    bus3.add(obj10);
+
+    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+
+    GarageService gars1 = new GarageService(gar1);
+    GarageService gars2 = new GarageService(gar2);
+    GarageService gars3 = new GarageService(gar3);
+
+    return new Object[][]{{gars1, 5},{gars2, 3},{gars3, 5}};
+}
+
+    @Test(dataProvider = "garageServiceMinProvider")
+    public void garageServiceMinTest(GarageService garageService, int min) {
+        assertEquals(garageService.findSmallestCapacity(), min);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*@DataProvider
+    public Object[][] xmlBusProvider()throws IOException{
+        Serializing<Bus> busXml = new SerializeBusXml();
+        FileWriter fw = new FileWriter("Bus.xml");
+        busXml.serializingObj(obj1, fw);
+        return new Object[][]{{obj1}};
+}
+
+    @Test(dataProvider = "xmlBusProvider")
+    public void xmlBusTest(Serializing<Bus> busXml, Bus obj, Wrie,Reader in) {
+
+        obj.equals(busXml.deserializingObj(busXml.serializingObj(obj), in));
+    }*/
+
 }

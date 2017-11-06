@@ -42,11 +42,20 @@ public class BusApp {
         Garage temp1;
         temp1 = garageXml.deserializingObj(fis1);
         System.out.println(temp1.toString());
-
-
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       Bus busik = new BusBuilder()
+                .setCapacity(10)
+                .setIdentificationNumder("PO9076IO")
+                .setDataConstruction(LocalDate.of(1997,12,23))
+                .setModel(Bus.Model.GEELY)
+                .build();
+        Serializing<Bus> busTxt = new SerializeBusTxt();
+        FileWriter f = new FileWriter("Bus.txt");
+        busTxt.serializingObj(busik, f);
+        FileReader fr = new FileReader("Bus.txt");
+        Bus tempik;
+        tempik = busTxt.deserializingObj(fr);
+        System.out.println(tempik.toString());
     }
-
-
 
 }

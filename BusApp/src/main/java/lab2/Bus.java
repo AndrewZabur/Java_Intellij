@@ -11,6 +11,10 @@ public class Bus {
     private String indentificationNumber;
     private LocalDate dataConstruction;
     private Model model;
+
+    private final static String CAPACITY_PATTERN = "capacity=(\\d{1,})";
+    private final static String DATA_CONSTRUCTION_PATTERN = "dataConstruction=(\\d{4}\\-\\d{2}\\-\\d{2})";
+    private final static String MODEL_PATTERN = "model=([A-Z]{1,})";
     private final static String NUMBER_PATTERN = "[A-Z]{2}\\d{4}[A-Z]{2}";
 
     public enum Model{
@@ -119,6 +123,30 @@ public class Bus {
         return ((other.dataConstruction.equals(this.dataConstruction))
                 && (other.capacity == this.capacity) && (other.indentificationNumber.equals(this.indentificationNumber)));
 
+    }
+    public Bus fromString(String[] str){
+        Pattern pattern1 = Pattern.compile(NUMBER_PATTERN);
+        Pattern pattern2 = Pattern.compile(MODEL_PATTERN);
+        Pattern pattern3 = Pattern.compile(CAPACITY_PATTERN);
+        Pattern pattern4 = Pattern.compile(DATA_CONSTRUCTION_PATTERN);
+        Matcher match;
+
+        for(int i = 0; i < 4; i++) {
+
+            if((match = pattern1.matcher(str[i])).matches() == true){
+                this.indentificationNumber = match.group(1);
+            }
+            if((match = pattern2.matcher(str[i])).matches() == true){
+                this.model = Model.valueOf(match.group(1));
+            }
+            if((match = pattern3.matcher(str[i])).matches() == true){
+                this.capacity = Integer.parseInt(match.group(1));
+            }
+            if((match = pattern4.matcher(str[i])).matches()){
+                this.dataConstruction = LocalDate.parse(match.group(1));
+            }
+        }
+        return this;
     }
 
     @Override

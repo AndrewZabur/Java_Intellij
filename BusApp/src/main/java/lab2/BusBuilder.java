@@ -2,7 +2,6 @@ package lab2;
 
 import java.time.LocalDate;
 import lab2.Bus.Model;
-
 public class BusBuilder {
 
     private int capacity;
@@ -40,6 +39,8 @@ public class BusBuilder {
         this.model = model;
         return this;
     }
+
+
 
     public Bus build() {
 

@@ -1,9 +1,11 @@
 package lab2.serialize;
 
 import lab2.Bus;
+import lab2.BusBuilder;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class SerializeBusTxt implements Serializing<Bus> {
     @Override
@@ -17,30 +19,13 @@ public class SerializeBusTxt implements Serializing<Bus> {
     public Bus deserializingObj(Reader in) throws IOException {
         BufferedReader bf = new BufferedReader(in);
         String[] str = new String[4];
-        String[] temp = new String[4];
+
+        Bus bus = new Bus();
 
         for(int i = 0; i < 4; i++){
             str[i]= bf.readLine();
-            temp[i] ="";
         }
-
-        for(int i = 0; i < str.length; i++){
-            for(int j = 0; j < str[i].length(); j++)
-            {
-                if(str[i].charAt(j)=='=') {
-                    while (j < str[i].length()-1) {
-                        temp[i] += str[i].charAt(j + 1);
-                        j++;
-                    }
-                }
-            }
-        }
-
-        Bus bus = new Bus();
-        bus.setCapacity(Integer.parseInt(temp[0]));
-        bus.setIndentificationNumber(temp[1]);
-        bus.setDataConstruction(LocalDate.parse(temp[2]));
-        bus.setModel(Bus.Model.valueOf(temp[3]));
+        bus.fromString(str);
         return bus;
 
     }
