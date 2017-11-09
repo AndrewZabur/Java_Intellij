@@ -18,17 +18,15 @@ public class SerializeGarageTxt implements Serializing<Garage>{
 
     @Override
     public Garage deserializingObj(Reader in) throws IOException {
-       /* BufferedReader bf = new BufferedReader(in);
-        String[] str = new String[4];
-
         Garage garage = new Garage();
+        String[] str = new String[4];
+        BufferedReader bf = new BufferedReader(in);
 
         for(int i = 0; i < 4; i++){
             str[i]= bf.readLine();
         }
-        garage.fromString(str);*/
-        return null;
-
+        garage.fromString(str);
+        return garage;
 
     }
 }

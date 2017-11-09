@@ -1,8 +1,10 @@
 package lab2;
 
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.regex.*;
 
 public class Bus {
@@ -15,7 +17,9 @@ public class Bus {
     private final static String CAPACITY_PATTERN = "capacity=(\\d{1,})";
     private final static String DATA_CONSTRUCTION_PATTERN = "dataConstruction=(\\d{4}\\-\\d{2}\\-\\d{2})";
     private final static String MODEL_PATTERN = "model=([A-Z]{1,})";
-    private final static String NUMBER_PATTERN = "[A-Z]{2}\\d{4}[A-Z]{2}";
+    private final static String NUMBER_PATTERN = "indentificationNumber=([A-Z]{2}\\d{4}[A-Z]{2})";
+    private final static String NUMBER_PATTERN1 = "[A-Z]{2}\\d{4}[A-Z]{2}";
+
 
     public enum Model{
         VOLKSWAGEN, FORD, RENAULT, TOYOTA, ICARUS, NISSAN, LADA, GEELY, DAEWOO, AUDI
@@ -61,8 +65,9 @@ public class Bus {
      */
     public boolean regularExpIdentificationNumber(String indentificationNumber){
 
-        Pattern pattern = Pattern.compile(NUMBER_PATTERN);
+        Pattern pattern = Pattern.compile(NUMBER_PATTERN1);
         Matcher match = pattern.matcher(indentificationNumber);
+
 
         return match.matches();
     }
@@ -153,7 +158,8 @@ public class Bus {
     public String toString() {
 
         return "capacity=" + capacity + "\nindentificationNumber=" + indentificationNumber + "\ndataConstruction="
-                + dataConstruction + "\nmodel=" + model ;
+                + dataConstruction + "\nmodel=" + model;
     }
+
 
 }

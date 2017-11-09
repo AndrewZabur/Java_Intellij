@@ -1,7 +1,6 @@
 package lab2;
 
-import sun.misc.Regexp;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.*;
 
@@ -11,10 +10,10 @@ public class Garage {
     private String owner;
     private ArrayList<Bus> buses;
 
-   /* private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
+    private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
     private final static String OWNER_PATTERN = "owner=([A-Z][a-z]{1,}\\s[A-Z][a-z]{1,}\\s[A-Z][a-z]{1,})";
-    private final static String BUSES_PATTERN = "bus=(.+)\\;";
-*/
+    private final static String BUSES_PATTERN = "bus=(.+)";
+
 
     public Garage(){
         this.adress = "Golovna st. 279-A";
@@ -141,47 +140,31 @@ public class Garage {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("adress="+adress);
-        str.append("\n");
-        str.append("owner="+owner);
-        str.append("\n");
-        for(int i = 0; i < buses.size(); i++){
-            str.append("bus=");
-            str.append(buses.get(i).toString());
-            str.append(";\n");
-        }
-        return str.toString();
+        return "adress='" + adress + "\'\n" +
+                "owner='" + owner + "\'\n" +
+                "buses=" + buses;
     }
 
 
-   /* public Garage fromString(String[] str){
+    public Garage fromString(String[] str){
         Pattern pattern1 = Pattern.compile(ADRESS_PATTERN);
         Pattern pattern2 = Pattern.compile(OWNER_PATTERN);
         Pattern pattern3 = Pattern.compile(BUSES_PATTERN);
         Matcher match;
 
-        for(int i = 0; i < 3; i++)
-        {
+        for(int i = 0; i < 4; i++) {
+
             if((match = pattern1.matcher(str[i])).matches() == true){
                 this.adress = match.group(1);
             }
             if((match = pattern2.matcher(str[i])).matches() == true){
                 this.owner = match.group(1);
             }
-
             if((match = pattern3.matcher(str[i])).matches() == true){
-                String tmpBuses = str[i];
-                System.out.println(tmpBuses);
-                for(int j = 0; j < this.buses.size(); j++)
-                {
-                    this.buses.add(new Bus().fromString(str));
-                }
 
             }
+
         }
-
         return this;
-    }*/
-
+    }
 }

@@ -1,8 +1,7 @@
 package test2;
 
 import lab2.GarageService;
-import lab2.serialize.SerializeBusXml;
-import lab2.serialize.Serializing;
+import lab2.serialize.*;
 import org.testng.annotations.Test;
 
 import lab2.Bus;
@@ -11,9 +10,7 @@ import lab2.GarageApp;
 import lab2.Bus.Model;
 import static org.testng.Assert.assertEquals;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -340,18 +337,114 @@ public class BusAppTest {
         assertEquals(garageService.findSmallestCapacity(), min);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*@DataProvider
+    @DataProvider
     public Object[][] xmlBusProvider()throws IOException{
-        Serializing<Bus> busXml = new SerializeBusXml();
-        FileWriter fw = new FileWriter("Bus.xml");
-        busXml.serializingObj(obj1, fw);
-        return new Object[][]{{obj1}};
-}
+        return new Object[][]{ {new SerializeBusXml(),"Bus.xml"} };
+    }
+
+    @Test( dataProvider = "xmlBusProvider")
+    public void xmlBusTestSerialize(Serializing<Bus> busXml, String file)throws IOException {
+        busXml.serializingObj(obj1, new PrintWriter(new File(file)));
+    }
 
     @Test(dataProvider = "xmlBusProvider")
-    public void xmlBusTest(Serializing<Bus> busXml, Bus obj, Wrie,Reader in) {
+    public void xmlBusTestDeserialize(Serializing<Bus> busXml, String file)throws IOException{
+        assertEquals(busXml.deserializingObj(new FileReader(new File(file))), obj1);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] jsonBusProvider()throws IOException{
+    return new Object[][]{ {new SerializeBusJson(),"Bus.json"} };
+}
 
-        obj.equals(busXml.deserializingObj(busXml.serializingObj(obj), in));
-    }*/
+    @Test( dataProvider = "jsonBusProvider")
+    public void jsonBusTestSerialize(Serializing<Bus> busJson, String file)throws IOException {
+        busJson.serializingObj(obj2, new PrintWriter(new File(file)));
+    }
+
+    @Test( dataProvider = "jsonBusProvider")
+    public void jsonBusTestDeserialize(Serializing<Bus> busJson, String file)throws IOException {
+        assertEquals(busJson.deserializingObj(new FileReader(new File(file))), obj2);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] txtBusProvider()throws IOException{
+    return new Object[][]{ {new SerializeBusTxt(),"Bus.txt"} };
+    }
+
+    @Test( dataProvider = "txtBusProvider")
+    public void txtBusTestSerialize(Serializing<Bus> busTxt, String file)throws IOException {
+        busTxt.serializingObj(obj1, new PrintWriter(new File(file)));
+    }
+
+    @Test( dataProvider = "txtBusProvider")
+    public void txtBusTestDeserialize(Serializing<Bus> busTxt, String file)throws IOException{
+        assertEquals(busTxt.deserializingObj(new FileReader(new File(file))), obj1);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @DataProvider
+    public Object [][] xmlGarageProvider()throws IOException{
+
+        return new Object[][]{{new SerializeGarageXml(), "Garage.xml"}};
+    }
+
+    @Test(dataProvider = "xmlGarageProvider")
+    public void xmlGarageTestSerialize(Serializing<Garage> garageXml, String file)throws IOException{
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+        bus2.add(obj8);
+        Garage gar2 = new Garage("Boulvar st. 4(A)", "Ivanov Ivan Ivanovich", bus2);
+
+        garageXml.serializingObj(gar2, new PrintWriter(new File(file)));
+    }
+
+    @Test(dataProvider = "xmlGarageProvider")
+    public void xmlGarageTestDeserialize(Serializing<Garage> garageXml, String file)throws IOException{
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+        bus2.add(obj8);
+        Garage gar2 = new Garage("Boulvar st. 4(A)", "Ivanov Ivan Ivanovich", bus2);
+
+        assertEquals(garageXml.deserializingObj(new FileReader(new File(file))), gar2 );
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object [][] jsonGarageProvider()throws IOException{
+
+        return new Object[][]{{new SerializeGarageJson(), "Garage.json"}};
+    }
+
+    @Test(dataProvider = "jsonGarageProvider")
+    public void jsonGarageTestSerialize(Serializing<Garage> garageJson, String file)throws IOException{
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+
+        garageJson.serializingObj(gar1, new PrintWriter(new File(file)));
+    }
+
+    @Test(dataProvider = "jsonGarageProvider")
+    public void jsonGarageTestDeserialize(Serializing<Garage> garageJson, String file)throws IOException{
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+
+        assertEquals(garageJson.deserializingObj(new FileReader(new File(file))), gar1 );
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
