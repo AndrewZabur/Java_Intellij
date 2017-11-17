@@ -1,14 +1,12 @@
 package lab2.serialize;
 
-import lab2.Bus;
 import lab2.Garage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
+import java.util.ArrayList;
 
-public class SerializeGarageTxt implements Serializing<Garage>{
+public class SerializeGarageTxt implements Serializing<Garage> {
+
     @Override
     public void serializingObj(Garage obj, Writer out) throws IOException {
         out.write(obj.toString());
@@ -17,14 +15,15 @@ public class SerializeGarageTxt implements Serializing<Garage>{
     }
 
     @Override
-    public Garage deserializingObj(Reader in) throws IOException {
+    public Garage deserializingObj(Reader in) throws IOException,  NullPointerException {
         Garage garage = new Garage();
-        String[] str = new String[4];
         BufferedReader bf = new BufferedReader(in);
+        String[] str = new String[1000];
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < str.length; i++){
             str[i]= bf.readLine();
         }
+
         garage.fromString(str);
         return garage;
 

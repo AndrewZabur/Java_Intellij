@@ -337,6 +337,7 @@ public class BusAppTest {
         assertEquals(garageService.findSmallestCapacity(), min);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @DataProvider
     public Object[][] xmlBusProvider()throws IOException{
         return new Object[][]{ {new SerializeBusXml(),"Bus.xml"} };
@@ -414,7 +415,6 @@ public class BusAppTest {
 
         assertEquals(garageXml.deserializingObj(new FileReader(new File(file))), gar2 );
     }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
     public Object [][] jsonGarageProvider()throws IOException{
@@ -446,5 +446,32 @@ public class BusAppTest {
         assertEquals(garageJson.deserializingObj(new FileReader(new File(file))), gar1 );
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object [][] txtGarageProvider()throws IOException{
+        return new Object[][]{{new SerializeGarageTxt(), "Garage.txt"}};
+    }
 
+    @Test(dataProvider = "txtGarageProvider")
+    public void txtGarageTestSerialize(Serializing<Garage> garageTxt, String file)throws IOException{
+        ArrayList<Bus> bus = new ArrayList<Bus>();
+
+        bus.add(obj1);
+        bus.add(obj3);
+        bus.add(obj10);
+        Garage gar = new Garage("Golovna st. 29(A)", "Zabur Andriy Gen", bus);
+
+        garageTxt.serializingObj(gar, new PrintWriter(new File(file)));
+    }
+
+    @Test(dataProvider = "txtGarageProvider")
+    public void txtGarageTestDeserialize(Serializing<Garage> garageTxt, String file)throws IOException{
+        ArrayList<Bus> bus = new ArrayList<Bus>();
+        bus.add(obj1);
+        bus.add(obj3);
+        bus.add(obj10);
+        Garage gar = new Garage("Golovna st. 29(A)", "Zabur Andriy Gen", bus);
+
+        garageTxt.deserializingObj(new FileReader(new File(file))).equals(gar);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

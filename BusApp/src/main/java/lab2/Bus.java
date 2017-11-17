@@ -14,6 +14,7 @@ public class Bus {
     private LocalDate dataConstruction;
     private Model model;
 
+
     private final static String CAPACITY_PATTERN = "capacity=(\\d{1,})";
     private final static String DATA_CONSTRUCTION_PATTERN = "dataConstruction=(\\d{4}\\-\\d{2}\\-\\d{2})";
     private final static String MODEL_PATTERN = "model=([A-Z]{1,})";

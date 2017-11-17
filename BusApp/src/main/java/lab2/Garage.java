@@ -3,6 +3,7 @@ package lab2;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.*;
+import java.util.stream.IntStream;
 
 public class Garage {
 
@@ -12,7 +13,7 @@ public class Garage {
 
     private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
     private final static String OWNER_PATTERN = "owner=([A-Z][a-z]{1,}\\s[A-Z][a-z]{1,}\\s[A-Z][a-z]{1,})";
-    private final static String BUSES_PATTERN = "bus=(.+)";
+    private final static String BUSES_PATTERN = "bus=\\[";
 
 
     public Garage(){
@@ -140,30 +141,54 @@ public class Garage {
 
     @Override
     public String toString() {
-        return "adress='" + adress + "\'\n" +
-                "owner='" + owner + "\'\n" +
-                "buses=" + buses;
+        StringBuilder str = new StringBuilder();
+        str.append("adress=");
+        str.append(this.adress);
+        str.append("\n");
+        str.append("owner=");
+        str.append(this.owner);
+        str.append("\n");
+        str.append("buses=[");
+        str.append("\n");
+        int bound = this.buses.size();
+        for (int i = 0; i < bound; i++) {
+            str.append(buses.get(i).toString());
+            str.append("\n");
+        }
+        str.append("]");
+        return str.toString();
     }
 
 
     public Garage fromString(String[] str){
         Pattern pattern1 = Pattern.compile(ADRESS_PATTERN);
         Pattern pattern2 = Pattern.compile(OWNER_PATTERN);
-        Pattern pattern3 = Pattern.compile(BUSES_PATTERN);
         Matcher match;
-
-        for(int i = 0; i < 4; i++) {
-
+        String[] tmp = new String[4];
+        Bus bus = new Bus();
+        ArrayList<Bus> buses1 = new ArrayList<>();
+        int i;
+        for(i = 0; i < 3; i++)
+        {
             if((match = pattern1.matcher(str[i])).matches() == true){
                 this.adress = match.group(1);
             }
             if((match = pattern2.matcher(str[i])).matches() == true){
                 this.owner = match.group(1);
             }
-            if((match = pattern3.matcher(str[i])).matches() == true){
-
+        }
+        while (true){
+            if(str[i].equals("]")){
+                break;
+            }
+            for(int j = 0; j < 4; j++){
+                tmp[j] = str[i];
+                i++;
             }
 
+            bus.fromString(tmp);
+            buses1.add(bus);
+            this.setBuses(buses1);
         }
         return this;
     }
