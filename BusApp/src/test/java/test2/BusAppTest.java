@@ -380,7 +380,8 @@ public class BusAppTest {
 
     @Test( dataProvider = "txtBusProvider")
     public void txtBusTestDeserialize(Serializing<Bus> busTxt, String file)throws IOException{
-        assertEquals(busTxt.deserializingObj(new FileReader(new File(file))), obj1);
+
+        busTxt.deserializingObj(new FileReader(new File(file))).equals(obj1);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

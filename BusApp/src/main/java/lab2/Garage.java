@@ -1,9 +1,7 @@
 package lab2;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.*;
-import java.util.stream.IntStream;
 
 public class Garage {
 
@@ -13,8 +11,6 @@ public class Garage {
 
     private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
     private final static String OWNER_PATTERN = "owner=([A-Z][a-z]{1,}\\s[A-Z][a-z]{1,}\\s[A-Z][a-z]{1,})";
-    private final static String BUSES_PATTERN = "bus=\\[";
-
 
     public Garage(){
         this.adress = "Golovna st. 279-A";
