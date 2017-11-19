@@ -1,5 +1,6 @@
 package test2;
 
+import lab2.DB.MySQLBusApp;
 import lab2.GarageService;
 import lab2.serialize.*;
 import org.testng.annotations.Test;
@@ -11,6 +12,7 @@ import lab2.Bus.Model;
 import static org.testng.Assert.assertEquals;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -34,17 +36,19 @@ public class BusAppTest {
     GarageApp garages1 = new GarageApp();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * This test will check the capacity of the bus.
+     *
      * @return
      */
     @DataProvider
-    public Object[][] capacityProvider(){
-        return new Object[][]{ {1, true}, {3, true}, {519, false}, {100, false}, {5, true}};
+    public Object[][] capacityProvider() {
+        return new Object[][]{{1, true}, {3, true}, {519, false}, {100, false}, {5, true}};
     }
 
     @Test(dataProvider = "capacityProvider")
-    public void testCapacity(int p1, boolean p2){
+    public void testCapacity(int p1, boolean p2) {
 
         assertEquals(new Bus().checkOfTheSize(p1), p2);
     }
@@ -52,7 +56,8 @@ public class BusAppTest {
 //////////////////////////////////////////////////////////////////////////
 
     /**
-     *This test will check, whether the bus from the garage can transport this people.
+     * This test will check, whether the bus from the garage can transport this people.
+     *
      * @return
      */
 
@@ -82,7 +87,7 @@ public class BusAppTest {
 
         garage.setBuses(buses);
 
-        return new Object[][] { {garage,33, result1}, {garage, 10, result2}, {garage,6, result3} };
+        return new Object[][]{{garage, 33, result1}, {garage, 10, result2}, {garage, 6, result3}};
 
     }
 
@@ -93,9 +98,11 @@ public class BusAppTest {
 
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     *	This test will check, whether the company of people will fit
-     *to the all cars which are in this garage.
+     * This test will check, whether the company of people will fit
+     * to the all cars which are in this garage.
+     *
      * @return
      */
 
@@ -110,17 +117,19 @@ public class BusAppTest {
 
         garage.setBuses(buses);
 
-        return new Object[][] { {garage, 59, true}, {garage, 100, false}, {garage, 68, true} };
+        return new Object[][]{{garage, 59, true}, {garage, 100, false}, {garage, 68, true}};
     }
 
     @Test(dataProvider = "companyInfoProvider")
     public void testInfoCompany(Garage garage, int company, boolean result) {
-        assertEquals(garage.companyOfPeople(company),result);
+        assertEquals(garage.companyOfPeople(company), result);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * This test will check, which garages can transport given amount of people.
+     *
      * @return
      */
 
@@ -172,7 +181,7 @@ public class BusAppTest {
 
         garages1.setGarages(garages);
 
-        return new Object[][] { {garages1, 31, tmpGarage1}, {garages1, 55, tmpGarage2}, {garages1, 27, tmpGarage3 } };
+        return new Object[][]{{garages1, 31, tmpGarage1}, {garages1, 55, tmpGarage2}, {garages1, 27, tmpGarage3}};
     }
 
     @Test(dataProvider = "garageProvider")
@@ -181,23 +190,26 @@ public class BusAppTest {
         result.equals(garages.ifCanTransportCompany(company));
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * This test will check whether the identification number of the bus is correct.
+     *
      * @return
      */
 
     @DataProvider
     public Object[][] regularExpProvider() {
-        return new Object[][] { { "AH8790UN",  true}, {"BU3185QG", true}, {"ZA5334BUR", false}, {"QWE1243UT", false}, {"ER09871PO", false}};
+        return new Object[][]{{"AH8790UN", true}, {"BU3185QG", true}, {"ZA5334BUR", false}, {"QWE1243UT", false}, {"ER09871PO", false}};
     }
 
     @Test(dataProvider = "regularExpProvider")
     public void reagularExpTest(String input, boolean check) {
         assertEquals(new Bus().regularExpIdentificationNumber(input), check);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object[][] garageCapacityProvider(){
+    public Object[][] garageCapacityProvider() {
 
         ArrayList<Bus> bus1 = new ArrayList<Bus>();
         ArrayList<Bus> bus2 = new ArrayList<Bus>();
@@ -224,113 +236,116 @@ public class BusAppTest {
         GarageService gars2 = new GarageService(gar2);
         GarageService gars3 = new GarageService(gar3);
 
-        return new Object[][]{{gars1, 57},{gars2, 31},{gars3, 28}};
+        return new Object[][]{{gars1, 57}, {gars2, 31}, {gars3, 28}};
     }
 
     @Test(dataProvider = "garageCapacityProvider")
-    public void garageCapacityTest(GarageService garageService, int  check) {
+    public void garageCapacityTest(GarageService garageService, int check) {
         assertEquals(garageService.garageCapacity(), check);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object[][] garageServiceCompanyProvider(){
-    ArrayList<Bus> bus1 = new ArrayList<Bus>();
-    ArrayList<Bus> bus2 = new ArrayList<Bus>();
-    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+    public Object[][] garageServiceCompanyProvider() {
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
 
-    bus1.add(obj1);
-    bus1.add(obj2);
-    bus1.add(obj3);
-    bus1.add(obj4);
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
 
-    bus2.add(obj5);
-    bus2.add(obj6);
-    bus2.add(obj7);
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
 
-    bus3.add(obj8);
-    bus3.add(obj9);
-    bus3.add(obj10);
+        bus3.add(obj8);
+        bus3.add(obj9);
+        bus3.add(obj10);
 
-    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
-    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
-    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+        Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
 
-    GarageService gars1 = new GarageService(gar1);
-    GarageService gars2 = new GarageService(gar2);
-    GarageService gars3 = new GarageService(gar3);
+        GarageService gars1 = new GarageService(gar1);
+        GarageService gars2 = new GarageService(gar2);
+        GarageService gars3 = new GarageService(gar3);
 
-    return new Object[][]{{gars1, 55, true},{gars2, 32, false},{gars3, 30, false}};
-}
+        return new Object[][]{{gars1, 55, true}, {gars2, 32, false}, {gars3, 30, false}};
+    }
 
     @Test(dataProvider = "garageServiceCompanyProvider")
-    public void garageServiceCompanyTest(GarageService garageService, int company, boolean  check) {
+    public void garageServiceCompanyTest(GarageService garageService, int company, boolean check) {
         assertEquals(garageService.companyOfPeople(company), check);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object[][] garageServiceMaxProvider(){
-    ArrayList<Bus> bus1 = new ArrayList<Bus>();
-    ArrayList<Bus> bus2 = new ArrayList<Bus>();
-    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+    public Object[][] garageServiceMaxProvider() {
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
 
-    bus1.add(obj1);
-    bus1.add(obj2);
-    bus1.add(obj3);
-    bus1.add(obj4);
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
 
-    bus2.add(obj5);
-    bus2.add(obj6);
-    bus2.add(obj7);
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
 
-    bus3.add(obj8);
-    bus3.add(obj9);
-    bus3.add(obj10);
+        bus3.add(obj8);
+        bus3.add(obj9);
+        bus3.add(obj10);
 
-    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
-    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
-    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+        Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
 
-    GarageService gars1 = new GarageService(gar1);
-    GarageService gars2 = new GarageService(gar2);
-    GarageService gars3 = new GarageService(gar3);
+        GarageService gars1 = new GarageService(gar1);
+        GarageService gars2 = new GarageService(gar2);
+        GarageService gars3 = new GarageService(gar3);
 
-    return new Object[][]{{gars1, 35},{gars2, 17},{gars3, 15}};
-}
+        return new Object[][]{{gars1, 35}, {gars2, 17}, {gars3, 15}};
+    }
 
     @Test(dataProvider = "garageServiceMaxProvider")
     public void garageServiceMaxTest(GarageService garageService, int max) {
         assertEquals(garageService.findBiggestCapacity(), max);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object[][] garageServiceMinProvider(){
-    ArrayList<Bus> bus1 = new ArrayList<Bus>();
-    ArrayList<Bus> bus2 = new ArrayList<Bus>();
-    ArrayList<Bus> bus3 = new ArrayList<Bus>();
+    public Object[][] garageServiceMinProvider() {
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
 
-    bus1.add(obj1);
-    bus1.add(obj2);
-    bus1.add(obj3);
-    bus1.add(obj4);
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
 
-    bus2.add(obj5);
-    bus2.add(obj6);
-    bus2.add(obj7);
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
 
-    bus3.add(obj8);
-    bus3.add(obj9);
-    bus3.add(obj10);
+        bus3.add(obj8);
+        bus3.add(obj9);
+        bus3.add(obj10);
 
-    Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
-    Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
-    Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+        Garage gar3 = new Garage("Stasyuka st. 8(B)", "Gomenyuk Stanislav Vasilovich", bus3);
 
-    GarageService gars1 = new GarageService(gar1);
-    GarageService gars2 = new GarageService(gar2);
-    GarageService gars3 = new GarageService(gar3);
+        GarageService gars1 = new GarageService(gar1);
+        GarageService gars2 = new GarageService(gar2);
+        GarageService gars3 = new GarageService(gar3);
 
-    return new Object[][]{{gars1, 5},{gars2, 3},{gars3, 5}};
-}
+        return new Object[][]{{gars1, 5}, {gars2, 3}, {gars3, 5}};
+    }
 
     @Test(dataProvider = "garageServiceMinProvider")
     public void garageServiceMinTest(GarageService garageService, int min) {
@@ -339,60 +354,62 @@ public class BusAppTest {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @DataProvider
-    public Object[][] xmlBusProvider()throws IOException{
-        return new Object[][]{ {new SerializeBusXml(),"Bus.xml"} };
+    public Object[][] xmlBusProvider() throws IOException {
+        return new Object[][]{{new SerializeBusXml(), "Bus.xml"}};
     }
 
-    @Test( dataProvider = "xmlBusProvider")
-    public void xmlBusTestSerialize(Serializing<Bus> busXml, String file)throws IOException {
+    @Test(dataProvider = "xmlBusProvider")
+    public void xmlBusTestSerialize(Serializing<Bus> busXml, String file) throws IOException {
         busXml.serializingObj(obj1, new PrintWriter(new File(file)));
     }
 
     @Test(dataProvider = "xmlBusProvider")
-    public void xmlBusTestDeserialize(Serializing<Bus> busXml, String file)throws IOException{
+    public void xmlBusTestDeserialize(Serializing<Bus> busXml, String file) throws IOException {
         assertEquals(busXml.deserializingObj(new FileReader(new File(file))), obj1);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @DataProvider
-    public Object[][] jsonBusProvider()throws IOException{
-    return new Object[][]{ {new SerializeBusJson(),"Bus.json"} };
-}
 
-    @Test( dataProvider = "jsonBusProvider")
-    public void jsonBusTestSerialize(Serializing<Bus> busJson, String file)throws IOException {
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] jsonBusProvider() throws IOException {
+        return new Object[][]{{new SerializeBusJson(), "Bus.json"}};
+    }
+
+    @Test(dataProvider = "jsonBusProvider")
+    public void jsonBusTestSerialize(Serializing<Bus> busJson, String file) throws IOException {
         busJson.serializingObj(obj2, new PrintWriter(new File(file)));
     }
 
-    @Test( dataProvider = "jsonBusProvider")
-    public void jsonBusTestDeserialize(Serializing<Bus> busJson, String file)throws IOException {
+    @Test(dataProvider = "jsonBusProvider")
+    public void jsonBusTestDeserialize(Serializing<Bus> busJson, String file) throws IOException {
         assertEquals(busJson.deserializingObj(new FileReader(new File(file))), obj2);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object[][] txtBusProvider()throws IOException{
-    return new Object[][]{ {new SerializeBusTxt(),"Bus.txt"} };
+    public Object[][] txtBusProvider() throws IOException {
+        return new Object[][]{{new SerializeBusTxt(), "Bus.txt"}};
     }
 
-    @Test( dataProvider = "txtBusProvider")
-    public void txtBusTestSerialize(Serializing<Bus> busTxt, String file)throws IOException {
+    @Test(dataProvider = "txtBusProvider")
+    public void txtBusTestSerialize(Serializing<Bus> busTxt, String file) throws IOException {
         busTxt.serializingObj(obj1, new PrintWriter(new File(file)));
     }
 
-    @Test( dataProvider = "txtBusProvider")
-    public void txtBusTestDeserialize(Serializing<Bus> busTxt, String file)throws IOException{
+    @Test(dataProvider = "txtBusProvider")
+    public void txtBusTestDeserialize(Serializing<Bus> busTxt, String file) throws IOException {
 
         busTxt.deserializingObj(new FileReader(new File(file))).equals(obj1);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @DataProvider
-    public Object [][] xmlGarageProvider()throws IOException{
+    public Object[][] xmlGarageProvider() throws IOException {
 
         return new Object[][]{{new SerializeGarageXml(), "Garage.xml"}};
     }
 
     @Test(dataProvider = "xmlGarageProvider")
-    public void xmlGarageTestSerialize(Serializing<Garage> garageXml, String file)throws IOException{
+    public void xmlGarageTestSerialize(Serializing<Garage> garageXml, String file) throws IOException {
         ArrayList<Bus> bus2 = new ArrayList<Bus>();
 
         bus2.add(obj5);
@@ -405,7 +422,7 @@ public class BusAppTest {
     }
 
     @Test(dataProvider = "xmlGarageProvider")
-    public void xmlGarageTestDeserialize(Serializing<Garage> garageXml, String file)throws IOException{
+    public void xmlGarageTestDeserialize(Serializing<Garage> garageXml, String file) throws IOException {
         ArrayList<Bus> bus2 = new ArrayList<Bus>();
 
         bus2.add(obj5);
@@ -414,17 +431,18 @@ public class BusAppTest {
         bus2.add(obj8);
         Garage gar2 = new Garage("Boulvar st. 4(A)", "Ivanov Ivan Ivanovich", bus2);
 
-        assertEquals(garageXml.deserializingObj(new FileReader(new File(file))), gar2 );
+        assertEquals(garageXml.deserializingObj(new FileReader(new File(file))), gar2);
     }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object [][] jsonGarageProvider()throws IOException{
+    public Object[][] jsonGarageProvider() throws IOException {
 
         return new Object[][]{{new SerializeGarageJson(), "Garage.json"}};
     }
 
     @Test(dataProvider = "jsonGarageProvider")
-    public void jsonGarageTestSerialize(Serializing<Garage> garageJson, String file)throws IOException{
+    public void jsonGarageTestSerialize(Serializing<Garage> garageJson, String file) throws IOException {
         ArrayList<Bus> bus1 = new ArrayList<Bus>();
         bus1.add(obj1);
         bus1.add(obj2);
@@ -436,7 +454,7 @@ public class BusAppTest {
     }
 
     @Test(dataProvider = "jsonGarageProvider")
-    public void jsonGarageTestDeserialize(Serializing<Garage> garageJson, String file)throws IOException{
+    public void jsonGarageTestDeserialize(Serializing<Garage> garageJson, String file) throws IOException {
         ArrayList<Bus> bus1 = new ArrayList<Bus>();
         bus1.add(obj1);
         bus1.add(obj2);
@@ -444,16 +462,17 @@ public class BusAppTest {
         bus1.add(obj4);
         Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
 
-        assertEquals(garageJson.deserializingObj(new FileReader(new File(file))), gar1 );
+        assertEquals(garageJson.deserializingObj(new FileReader(new File(file))), gar1);
     }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
-    public Object [][] txtGarageProvider()throws IOException{
+    public Object[][] txtGarageProvider() throws IOException {
         return new Object[][]{{new SerializeGarageTxt(), "Garage.txt"}};
     }
 
     @Test(dataProvider = "txtGarageProvider")
-    public void txtGarageTestSerialize(Serializing<Garage> garageTxt, String file)throws IOException{
+    public void txtGarageTestSerialize(Serializing<Garage> garageTxt, String file) throws IOException {
         ArrayList<Bus> bus = new ArrayList<Bus>();
 
         bus.add(obj1);
@@ -465,7 +484,7 @@ public class BusAppTest {
     }
 
     @Test(dataProvider = "txtGarageProvider")
-    public void txtGarageTestDeserialize(Serializing<Garage> garageTxt, String file)throws IOException{
+    public void txtGarageTestDeserialize(Serializing<Garage> garageTxt, String file) throws IOException {
         ArrayList<Bus> bus = new ArrayList<Bus>();
         bus.add(obj1);
         bus.add(obj3);
@@ -474,5 +493,139 @@ public class BusAppTest {
 
         garageTxt.deserializingObj(new FileReader(new File(file))).equals(gar);
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] addBusDBProvider() throws SQLException, ClassNotFoundException {
+        return new Object[][]{{obj7, 1}, {obj8, 2}, {obj9, 3}};
+    }
+
+    @Test(dataProvider = "addBusDBProvider")
+    public void addBusDBTest(Bus bus, int garageNum) throws SQLException, ClassNotFoundException {
+        new MySQLBusApp().addBus(bus, garageNum);
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] getBusDBProvider() throws SQLException, ClassNotFoundException {
+        return new Object[][]{{obj7, 7}, {obj8, 8}, {obj9, 9}};
+    }
+
+    @Test(dataProvider = "getBusDBProvider")
+    public void getBusDBTest(Bus bus, int busId) throws SQLException, ClassNotFoundException {
+        bus.equals(new MySQLBusApp().getBus(busId));
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] updateBusDBProvider() throws SQLException, ClassNotFoundException {
+        return new Object[][]{{obj1, 1}, {obj2, 2}, {obj3, 3}};
+    }
+
+    @Test(dataProvider = "updateBusDBProvider")
+    public void updateBusDBTest(Bus bus, int busId) throws SQLException, ClassNotFoundException {
+        new MySQLBusApp().updateBus(bus, busId);
+        bus.equals(new MySQLBusApp().getBus(busId));
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] deleteBusDBProvider() throws SQLException, ClassNotFoundException {
+        return new Object[][]{{4}, {5}};
+    }
+
+    @Test(dataProvider = "deleteBusDBProvider")
+    public void deleteBusDBTest(int busId) throws SQLException, ClassNotFoundException {
+        new MySQLBusApp().deleteBus(busId);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object [][] addGarageDBProvider()throws SQLException, ClassNotFoundException{
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+
+        return new Object[][]{{gar1},{gar2}};
+    }
+
+    @Test(dataProvider = "addGarageDBProvider")
+    public void addGarageDBTest(Garage garage)throws SQLException, ClassNotFoundException{
+        new MySQLBusApp().addGarage(garage);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] getGarageDBProvider() throws SQLException, ClassNotFoundException {
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+
+        Garage gar1 = new Garage("Golovna st. 279(A)", "Serbynchuk Andriy Yevhenovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+
+        return new Object[][]{{gar1, 4}, {gar2, 5}};
+    }
+
+    @Test(dataProvider = "getGarageDBProvider")
+        public void getGarageDBTest(Garage garage, int garageId) throws SQLException, ClassNotFoundException {
+            garage.equals(new MySQLBusApp().getGarage(garageId));
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] updateGarageDBProvider() throws SQLException, ClassNotFoundException {
+        ArrayList<Bus> bus1 = new ArrayList<Bus>();
+        ArrayList<Bus> bus2 = new ArrayList<Bus>();
+        ArrayList<Bus> bus3 = new ArrayList<Bus>();
+
+        bus1.add(obj1);
+        bus1.add(obj2);
+        bus1.add(obj3);
+        bus1.add(obj4);
+
+        bus2.add(obj5);
+        bus2.add(obj6);
+        bus2.add(obj7);
+
+        Garage gar1 = new Garage("Stasyuka st. 91(C)", "Prokopyuk Valentin Petrovich", bus1);
+        Garage gar2 = new Garage("Olimpic st. 311(H)", "Tomyuk Mykola Yuriyovich", bus2);
+
+        return new Object[][]{{gar1, 1}, {gar2, 3}};
+    }
+
+    @Test(dataProvider = "updateGarageDBProvider")
+    public void updateGarageDBTest(Garage garage, int garageId) throws SQLException, ClassNotFoundException {
+        new MySQLBusApp().updateGarage(garage, garageId);
+        garage.equals(new MySQLBusApp().getBus(garageId));
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public Object[][] deleteGarageDBProvider() throws SQLException, ClassNotFoundException {
+        return new Object[][]{{6}};
+    }
+
+    @Test(dataProvider = "deleteGarageDBProvider")
+    public void deleteGarageDBTest(int garageId) throws SQLException, ClassNotFoundException {
+        new MySQLBusApp().deleteGarage(garageId);
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
