@@ -1,5 +1,8 @@
 package lab2;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.regex.*;
 
@@ -8,20 +11,15 @@ public class Garage {
     private String adress;
     private String owner;
     private ArrayList<Bus> buses;
+    @XmlTransient
+    @JsonIgnore
+    private int id;
 
     private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
     private final static String OWNER_PATTERN = "owner=([A-Z][a-z]{1,}\\s[A-Z][a-z]{1,}\\s[A-Z][a-z]{1,})";
 
     public Garage(){
-        this.adress = "Golovna st. 279-A";
-        this.owner = "Ivanov Ivan Ivanovich";
-        this.buses = null;
-    }
 
-    public Garage(Garage obj){
-        this.adress = obj.adress;
-        this.owner = obj.owner;
-        this.buses = obj.buses;
     }
 
     public Garage(String adress, String owner, ArrayList<Bus> buses){
@@ -40,7 +38,7 @@ public class Garage {
     public ArrayList<Bus> garageInfo(int passengers){
         assert passengers > 0 : "Wrong param!!!";
 
-        ArrayList<Bus> tmpBuses = new ArrayList<Bus>();
+        ArrayList<Bus> tmpBuses = new ArrayList<>();
 
         for(int i = 0; i < buses.size(); i++)
         {
@@ -111,6 +109,14 @@ public class Garage {
         this.owner = owner;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -132,11 +138,18 @@ public class Garage {
 
         Garage other = (Garage) obj;
 
-        return (other.adress.equals(this.adress) &&  other.owner.equals(this.owner));
+        return (other.adress.equals(this.adress) &&  other.owner.equals(this.owner) /*&& other.buses.equals(this.buses)*/);
     }
 
     @Override
     public String toString() {
+        return "Garage{" +
+                "adress='" + adress + '\'' +
+                ", owner='" + owner + '\'' +
+                '}';
+    }
+
+    public String formString() {
         StringBuilder str = new StringBuilder();
         str.append("adress=");
         str.append(this.adress);

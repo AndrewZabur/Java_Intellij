@@ -1,10 +1,11 @@
 package lab2;
 
 
-import java.lang.reflect.Array;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.xml.bind.annotation.XmlTransient;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.regex.*;
 
 public class Bus {
@@ -13,6 +14,9 @@ public class Bus {
     private String indentificationNumber;
     private LocalDate dataConstruction;
     private Model model;
+    @XmlTransient
+    @JsonIgnore
+    private int id;
 
 
     private final static String CAPACITY_PATTERN = "capacity=(\\d{1,})";
@@ -33,13 +37,6 @@ public class Bus {
         this.model = Model.LADA;
     }
 
-    public Bus(Bus bus){
-        this.capacity = bus.capacity;
-        this.indentificationNumber = bus.indentificationNumber;
-        this.dataConstruction = bus.dataConstruction;
-        this.model = bus.model;
-    }
-
     public Bus(int capacity, String indentificationNumber, LocalDate dataConstruction, Model model){
         this.capacity = capacity;
         this.indentificationNumber = indentificationNumber;
@@ -56,6 +53,7 @@ public class Bus {
      */
 
     public boolean checkOfTheSize(int number){
+
         return number <= this.capacity;
     }
 
@@ -103,6 +101,14 @@ public class Bus {
 
     public void setDataConstruction(LocalDate dataConstruction) {
         this.dataConstruction = dataConstruction;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -41,12 +41,8 @@ public class BusBuilder {
     }
 
 
-
     public Bus build() {
 
         return new Bus(capacity, identificationNumber, dataConstruction, model);
     }
-
-
-
 }

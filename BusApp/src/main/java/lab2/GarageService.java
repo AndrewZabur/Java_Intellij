@@ -8,6 +8,15 @@ public class GarageService {
         this.garage = garage;
     }
 
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
+    }
+
+
     public int garageCapacity(){
         return garage.getBuses().stream().mapToInt(Bus :: getCapacity).sum();
     }
