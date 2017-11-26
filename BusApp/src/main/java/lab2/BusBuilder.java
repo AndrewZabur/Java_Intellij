@@ -40,9 +40,10 @@ public class BusBuilder {
         return this;
     }
 
-
     public Bus build() {
 
         return new Bus(capacity, identificationNumber, dataConstruction, model);
     }
+
+
 }
