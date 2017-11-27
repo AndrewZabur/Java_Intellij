@@ -2,6 +2,7 @@ package lab2.DB;
 
 import lab2.Bus;
 import lab2.Garage;
+import sun.util.cldr.CLDRLocaleDataMetaInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -67,6 +68,15 @@ public class MySQLBusApp {
         return buses;
     }
 
+    public int getBusIdByIndentificationNumber(String busIndentificationNumber)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT bus.busId FROM bus WHERE bus.indentificationNumber LIKE " +
+                "'" + busIndentificationNumber + "%'" +";");
+        resultSet.next();
+        return resultSet.getInt("busId");
+    }
+
     public Bus getBus(int id)throws SQLException, ClassNotFoundException{
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
@@ -99,6 +109,33 @@ public class MySQLBusApp {
         Statement statement = connection.createStatement();
         int deleteInfo =  statement.executeUpdate("DELETE FROM bus WHERE busId=" + id + ";");
         connection.close();
+    }
+
+    public int getGarageIdByAdress(String garageAdress)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT garage.garageId FROM garage WHERE garage.adress LIKE " +
+                 "'" +garageAdress + "%'" +";");
+        resultSet.next();
+        return resultSet.getInt("garageId");
+    }
+
+
+    public ArrayList<Garage> getAllGarages()throws SQLException, ClassNotFoundException{
+        ArrayList<Garage> garages = new ArrayList<>();
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM garage;");
+        while (resultSet.next()){
+            Garage garage = new Garage();
+            garage.setId(resultSet.getInt("garageId"));
+            garage.setAdress(resultSet.getString("adress"));
+            garage.setOwner(resultSet.getString("owner"));
+
+            garages.add(garage);
+        }
+        connection.close();
+        return garages;
     }
 
     public Garage getGarage(int id)throws SQLException, ClassNotFoundException{
@@ -154,5 +191,17 @@ public class MySQLBusApp {
         int deleteInfo = statement.executeUpdate("DELETE FROM garage WHERE garageId =" + id + ";");
         connection.close();
     }
+
+    public boolean garageTransportPeople(int garageId, int company)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT SUM(bus.capacity) FROM bus WHERE bus.garageId=" +
+                "'"+ garageId +"'" + ";");
+        resultSet.next();
+        int result = resultSet.getInt(1);
+
+        return result >= company;
+    }
+
 
 }

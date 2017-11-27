@@ -8,7 +8,6 @@ import java.sql.SQLException;
 public class BusApp {
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException, NullPointerException{
-        MySQLBusApp mySQLBusApp = new MySQLBusApp();
-        mySQLBusApp.reloadIncrement();
+      /*  MySQLBusApp mySQLBusApp = new MySQLBusApp();*/
     }
 }

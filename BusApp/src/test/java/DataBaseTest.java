@@ -1,5 +1,4 @@
 import lab2.Bus;
-import lab2.BusBuilder;
 import lab2.DB.MySQLBusApp;
 import lab2.Garage;
 import org.testng.annotations.BeforeClass;
@@ -95,13 +94,16 @@ public class DataBaseTest {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
     public Object[][] deleteBusDBProvider() throws SQLException, ClassNotFoundException{
-        return new Object[][]{{bus1, 1}};
+        return new Object[][]{{bus3, "KL1324LM"}};
     }
 
     @Test(dataProvider = "deleteBusDBProvider")
-    public void deleteBusDBTest(Bus bus, int id) throws SQLException, ClassNotFoundException {
-        bus.setId(id);
-        new MySQLBusApp().deleteBus(bus.getId());
+    public void deleteBusDBTest(Bus bus, String indentificationNumber) throws SQLException, ClassNotFoundException {
+        int id = new MySQLBusApp().getBusIdByIndentificationNumber(indentificationNumber);
+        int result = new MySQLBusApp().getAllBuses().size();
+        new MySQLBusApp().deleteBus(id);
+        assertEquals(new MySQLBusApp().getAllBuses().size(), result-1);
+        new MySQLBusApp().addBus(bus, 4);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,13 +143,28 @@ public class DataBaseTest {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
     public Object[][] deleteGarageDBProvider() throws SQLException, ClassNotFoundException{
-         return new Object[][]{{garage4, 4}};
+         return new Object[][]{{garage1, "Boulvar"}};
     }
 
     @Test(dataProvider = "deleteGarageDBProvider")
-    public void deleteGarageDBTest(Garage garage, int id) throws SQLException, ClassNotFoundException {
-        garage.setId(id);
-        new MySQLBusApp().deleteGarage(garage.getId());
+    public void deleteGarageDBTest(Garage garage, String adress) throws SQLException, ClassNotFoundException {
+        int id = new MySQLBusApp().getGarageIdByAdress(adress);
+        int result = new MySQLBusApp().getAllGarages().size();
+        new MySQLBusApp().deleteGarage(id);
+        assertEquals(new MySQLBusApp().getAllGarages().size(), result-1);
+        new MySQLBusApp().addGarage(garage);
+
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @DataProvider
+    public  Object[][] garageTransportPeopleDBProvider()throws SQLException, ClassNotFoundException{
+        return new Object[][]{{2, 7, true},{3, 100, false},{4, 9, true}};
+    }
+
+    @Test(dataProvider = "garageTransportPeopleDBProvider")
+    public void garageTransportPeopleDBTest(int garageId, int company, boolean result)throws SQLException, ClassNotFoundException{
+        assertEquals(new MySQLBusApp().garageTransportPeople(garageId, company), result);
+    }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
