@@ -158,7 +158,7 @@ public class DataBaseTest {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @DataProvider
     public  Object[][] garageTransportPeopleDBProvider()throws SQLException, ClassNotFoundException{
-        return new Object[][]{{2, 7, true},{3, 100, false},{4, 9, true}};
+        return new Object[][]{{2, 7, true},{3, 100, false},{4, 9, true}, {4, 17, false}};
     }
 
     @Test(dataProvider = "garageTransportPeopleDBProvider")
