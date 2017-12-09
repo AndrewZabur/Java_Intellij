@@ -1,0 +1,24 @@
+group 'servlet'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'org.testng:testng:6.8.21'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.1'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.1'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.0'
+    compile 'com.thoughtworks.xstream:xstream:1.4.9'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+}
+
+test{
+    useTestNG()
+}

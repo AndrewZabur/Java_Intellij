@@ -1,7 +1,5 @@
 package lab2;
 
-import lab2.DB.MySQLBusApp;
-
 import java.io.*;
 import java.sql.SQLException;
 
