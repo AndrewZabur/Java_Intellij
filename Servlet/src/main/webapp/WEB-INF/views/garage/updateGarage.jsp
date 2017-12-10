@@ -17,7 +17,7 @@
     <title>Update garage</title>
 </head>
 <body>
-<form  method="post">
+<form method="post">
     <form action="/GarageServlet/update/${garages.id}" method="post">
         <fieldset>
             <table border=1  class="table table-condensed">
@@ -29,16 +29,18 @@
                 </thead>
                 <tbody>
                 <tr>
-                <%--<label>Owner</label>--%>
-            <td><input size="75" type="text" placeholder="garage owner"
-                   name="owner"
-                   value="<c:out value="${garage.owner}"/>">
-            </td>
- <%--           <br><label>Address</label>
- --%>        <td>   <input size="75" type="text" placeholder="garage address"
-                   name="adress"
-                   value="<c:out value="${garage.adress}"/>">
-                </td>
+                    <td>
+                        <input size="75" type="text" placeholder="garage owner" name="owner"
+                        pattern="[A-Z][a-z]{1,30}\s[A-Z][a-z]{1,30}\s[A-Z][a-z]{1,30}"
+                        title="Example: Tomyuk Mykola Petrovich"
+                        required value="<c:out value="${garage.owner}"/>">
+                    </td>
+
+                    <td>
+                        <input size="75" type="text" placeholder="garage address" name="adress"
+                        pattern="[A-Z][a-z]{1,}\s[a-z]{2}.\s\d{1,}-[A-Z]" title="Example: Golovna st. 78-I"
+                        required value="<c:out value="${garage.adress}"/>">
+                    </td>
                 </tr>
                 </tbody>
             </table>

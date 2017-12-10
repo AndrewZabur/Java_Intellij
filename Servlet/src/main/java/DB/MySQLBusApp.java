@@ -130,6 +130,13 @@ public class MySQLBusApp {
         connection.close();
     }
 
+    public void deleteBusesOfGarage(int garageId)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        int deleteInfo = statement.executeUpdate("DELETE FROM bus WHERE bus.garageId="+garageId+";");
+        connection.close();
+    }
+
     public int getGarageIdByAdress(String garageAdress)throws SQLException, ClassNotFoundException{
         Connection connection = getConnection();
         Statement statement = connection.createStatement();
@@ -174,6 +181,8 @@ public class MySQLBusApp {
 
         return garage;
     }
+
+
 
     public Garage getNotEmptyGarage(int id)throws SQLException, ClassNotFoundException{
         Connection connection = getConnection();
@@ -232,6 +241,13 @@ public class MySQLBusApp {
         connection.close();
     }
 
+    public void deleteGarageWithBuses(int id)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        int deleteInfo = statement.executeUpdate("DELETE FROM garage WHERE garageId =" + id + ";");
+        deleteBusesOfGarage(id);
+        connection.close();
+    }
     public boolean garageTransportPeople(int garageId, int company)throws SQLException, ClassNotFoundException{
         Connection connection = getConnection();
         Statement statement = connection.createStatement();

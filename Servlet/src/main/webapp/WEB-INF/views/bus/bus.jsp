@@ -71,7 +71,7 @@
     </tbody>
 </table>
 
-<br><a href="/BusServlet/insert/${garage.id}"><button>Add new bus</button></a>
+<a href="/BusServlet/insert/${garage.id}"><button>Add new bus</button></a>
 
 </body>
 </html>

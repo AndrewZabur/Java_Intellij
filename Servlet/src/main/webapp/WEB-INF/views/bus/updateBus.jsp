@@ -32,19 +32,20 @@
 
                    <td>
                        <input type="text" placeholder="identification number" name="indentificationNumber"
+                       pattern="[A-Z]{2}\d{4}[A-Z]{2}" title="Example: IU9876NB" required
                         value="<c:out value="${bus.indentificationNumber}"/>">
                    </td>
                    <td>
                         <input type="text" placeholder="enter model" name="model"
-                           value="<c:out value="${bus.model}"/>">
+                        required value="<c:out value="${bus.model}"/>">
                    </td>
                   <td>
                         <input type="number" placeholder="enter capacity" name="capacity"
-                            value="<c:out value="${bus.capacity}"/>">
+                        required value="<c:out value="${bus.capacity}"/>">
                   </td>
                    <td>
                         <input type="date" placeholder="construction date" name="dataConstruction"
-                        value="<c:out value="${bus.dataConstruction}"/>">
+                        required value="<c:out value="${bus.dataConstruction}"/>">
                     </td>
                </tr>
                </tbody>

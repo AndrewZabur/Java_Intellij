@@ -22,7 +22,7 @@ public class Bus {
 
 
     public enum Model{
-        VOLKSWAGEN, FORD, RENAULT, TOYOTA, ICARUS, NISSAN, LADA, GEELY, DAEWOO, AUDI
+        VOLKSWAGEN, FORD, RENAULT, TOYOTA, ICARUS, NISSAN, LADA, GEELY, DAEWOO, AUDI, BMW, MERCEDEZ, LEXUS
     }
 
     public Bus(){
