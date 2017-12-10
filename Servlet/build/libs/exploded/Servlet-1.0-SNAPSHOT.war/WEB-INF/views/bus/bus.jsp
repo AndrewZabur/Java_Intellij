@@ -17,20 +17,35 @@
             text-align: center;
         }
         p{
-            text-align: right;
             font-size: x-large;
             color: grey;
         }
-        button{
-            outline: none;
-            border-radius: 40px;
+        div{
+            background-color: aqua;
         }
-
     </style>
 </head>
 <body>
-
+<p>
+    Owner: ${garage.owner}
+    <br>Address: ${garage.adress}
+</p>
+<%--<table border=1 class="table table-condensed">
+    <thead>
+    <tr style="background-color: aqua">
+        <th>Owner</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="text-align: center">${garage.owner}</td>
+        <td style="text-align: center">${garage.adress}</td>
+    </tr>
+    </tbody>
+</table>--%>
 <table border=1 class="table table-condensed">
+
     <thead>
     <tr style="background-color: aqua">
         <th>Model</th>
@@ -55,10 +70,6 @@
     </c:forEach>
     </tbody>
 </table>
-<p>
-    Owner: ${garage.owner}
-    <br>Address: ${garage.adress}
-</p>
 
 <br><a href="/BusServlet/insert/${garage.id}"><button>Add new bus</button></a>
 

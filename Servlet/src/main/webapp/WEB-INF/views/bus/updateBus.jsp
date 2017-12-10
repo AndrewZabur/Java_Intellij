@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
@@ -7,37 +6,51 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.min.css">
 
-    <title>Add new bus</title>
+    <style>
+        th{
+            background-color: aqua;
+            text-align: center;
+        }
+    </style>
+        <title>Update bus</title>
 </head>
 <body>
 <form method="post">
-    <form action="/BusServlet/${bus.id}/${garage.id}" method="post">
+    <form action="/BusServlet/update/${bus.id}/${garage.id}" method="post">
         <fieldset>
+           <table border=1  class="table table-condensed">
+               <thead>
+                   <tr>
+                       <th>Identification Number</th>
+                       <th>Model</th>
+                       <th>Capacity</th>
+                       <th>Date of the construction</th>
+                   </tr>
+               </thead>
+               <tbody>
+               <tr>
 
-            <label>Identification Number</label>
-            <input type="text" placeholder="identification number"
-                   name="indentificationNumber"
-                   value="<c:out value="${bus.indentifiactionNumber}"/>">
-
-            <br><label>Model</label>
-            <input type="text" placeholder="enter model"
-                   name="model"
-                   value="<c:out value="${bus.model}"/>">
-
-            <br><label>Capacity</label>
-            <input type="number" placeholder="enter capacity"
-                   name="capacity"
-                   value="<c:out value="${bus.capacity}"/>">
-
-            <br><label>Date of the construction</label>
-            <input type="date" placeholder="construction date"
-                   name="dataConstruction"
-                   value="<c:out value="${bus.dataConstruction}"/>">
-
-
+                   <td>
+                       <input type="text" placeholder="identification number" name="indentificationNumber"
+                        value="<c:out value="${bus.indentificationNumber}"/>">
+                   </td>
+                   <td>
+                        <input type="text" placeholder="enter model" name="model"
+                           value="<c:out value="${bus.model}"/>">
+                   </td>
+                  <td>
+                        <input type="number" placeholder="enter capacity" name="capacity"
+                            value="<c:out value="${bus.capacity}"/>">
+                  </td>
+                   <td>
+                        <input type="date" placeholder="construction date" name="dataConstruction"
+                        value="<c:out value="${bus.dataConstruction}"/>">
+                    </td>
+               </tr>
+               </tbody>
+           </table>
         </fieldset>
-
-        <input type="submit" value="Add bus" />
+        <input type="submit" value="Update" />
     </form>
 </form>
 </body>

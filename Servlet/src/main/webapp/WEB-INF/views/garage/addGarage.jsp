@@ -6,16 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.min.css">
     <style>
-        button{
-            border-radius: 30px;
-            outline: none;
-            align-items: center;
-        }
         th{
             background-color: aqua;
             text-align: center;
         }
-
     </style>
     <title>Add new garage</title>
 </head>

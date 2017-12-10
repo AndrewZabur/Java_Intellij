@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
@@ -7,16 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.min.css">
     <style>
-        button{
-            border-radius: 30px;
-            outline: none;
-            align-items: center;
-        }
         th{
             background-color: aqua;
             text-align: center;
         }
-
     </style>
     <title>Add new garage</title>
 </head>
@@ -33,16 +26,16 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <%--<label>Owner</label>--%>
-                    <td><input size="75" type="text" placeholder="garage owner"
+                    <td>
+                        <input size="75" type="text" placeholder="garage owner"
                                name="owner"
                                value="<c:out value="${garage.owner}"/>">
                     </td>
-                    <%--           <br><label>Address</label>
-                    --%>        <td>   <input size="75" type="text" placeholder="garage address"
+                         <td>
+                             <input size="75" type="text" placeholder="garage address"
                            name="adress"
                            value="<c:out value="${garage.adress}"/>">
-                </td>
+                        </td>
                 </tr>
                 </tbody>
             </table>

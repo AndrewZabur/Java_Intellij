@@ -87,7 +87,6 @@ public class GarageServlet extends HttpServlet {
         if ((match = ADD_PATTERN.matcher(url)).matches() == true) {
             try {
                 mySQLBusApp.addGarage(garage);
-                int id = garage.getId();
                 RequestDispatcher view = request.getRequestDispatcher(GARAGE_LIST);
                 request.setAttribute("garages", getGarages());
                 view.forward(request, response);

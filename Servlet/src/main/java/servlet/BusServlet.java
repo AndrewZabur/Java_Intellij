@@ -23,7 +23,7 @@ public class BusServlet extends HttpServlet {
 
     private final String GET_BUSES_OF_GARAGE = "/WEB-INF/views/bus/bus.jsp";
     private final String ADD_BUS = "/WEB-INF/views/bus/addBus.jsp";
-    private final String UPDATE_BUS = "WEB-INF/views/bus/updateBus.jsp";
+    private final String UPDATE_BUS = "/WEB-INF/views/bus/updateBus.jsp";
     private final Pattern ADD_BUS_PATTERN = Pattern.compile("/BusServlet/insert/(\\d+)");
     private final Pattern BUSES_LIST_PATTERN = Pattern.compile("/BusServlet/(\\d+)");
     private final Pattern UPDATE_BUS_PATTERN = Pattern.compile("/BusServlet/update/(\\d+)/(\\d+)");
@@ -50,6 +50,8 @@ public class BusServlet extends HttpServlet {
             request.setAttribute("garage", getGarage(garageId));
             dispatcher = request.getRequestDispatcher(UPDATE_BUS);
             dispatcher.forward(request, response);
+            /*PrintWriter out = response.getWriter();
+            out.println(bus.getIndentificationNumber());*/
         }
         else if ((match = DELETE_BUS_PATTERN.matcher(url)).matches() == true) {
             int id = Integer.parseInt(match.group(1));
