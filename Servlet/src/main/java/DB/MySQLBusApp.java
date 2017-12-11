@@ -178,10 +178,19 @@ public class MySQLBusApp {
             garage.setOwner(resultSet.getString("owner"));
         }
         garage.setBuses(buses);
-
+        connection.close();
         return garage;
     }
 
+    public boolean checkUniq(String IndentificationNumber)throws SQLException, ClassNotFoundException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT bus.indentificationNumber FROM bus WHERE bus.indentificationNumber LIKE " +
+                "'" + IndentificationNumber + "%'" +";");
+        return resultSet.next();
+
+
+    }
 
 
     public Garage getNotEmptyGarage(int id)throws SQLException, ClassNotFoundException{

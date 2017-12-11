@@ -1,4 +1,3 @@
-<%@ page import="java.time.LocalDate" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
@@ -32,21 +31,23 @@
                <tr>
 
                    <td>
-                       <input type="text" placeholder="identification number" name="indentificationNumber"
-                       pattern="[A-Z]{2}\d{4}[A-Z]{2}" title="Example: IU9876NB" required
+                       <input type="text" readonly name="indentificationNumber" pattern="[A-Z]{2}\d{4}[A-Z]{2}"
                         value="<c:out value="${bus.indentificationNumber}"/>">
                    </td>
                    <td>
-                        <input type="text" placeholder="enter model" name="model"
-                        required value="<c:out value="${bus.model}"/>">
+                       <select required name="model">
+                           <option>${bus.model}</option>
+                           <c:forEach items="${models}" var="models">
+                               <option>${models}</option>
+                           </c:forEach>
+                       </select>
                    </td>
                   <td>
                         <input type="number" placeholder="enter capacity" name="capacity"
                         required value="<c:out value="${bus.capacity}"/>">
                   </td>
                    <td>
-                        <input type="date" placeholder="construction date" name="dataConstruction"
-                        max="<%=LocalDate.now()%>" 
+                        <input type="date" readonly placeholder="construction date" name="dataConstruction"
                         required value="<c:out value="${bus.dataConstruction}"/>">
                     </td>
                </tr>

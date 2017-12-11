@@ -1,7 +1,6 @@
 package servlet;
 
 import DAO.Dao;
-import DB.MySQLBusApp;
 import classes.Bus;
 
 import javax.servlet.RequestDispatcher;
@@ -21,10 +20,12 @@ public class BusServlet extends HttpServlet {
     private final String GET_BUSES_OF_GARAGE = "/WEB-INF/views/bus/bus.jsp";
     private final String ADD_BUS = "/WEB-INF/views/bus/addBus.jsp";
     private final String UPDATE_BUS = "/WEB-INF/views/bus/updateBus.jsp";
+    private final String ERROR = "/WEB-INF/views/Error/errors.jsp";
     private final Pattern ADD_BUS_PATTERN = Pattern.compile("/BusServlet/insert/(\\d+)");
     private final Pattern BUSES_LIST_PATTERN = Pattern.compile("/BusServlet/(\\d+)");
     private final Pattern UPDATE_BUS_PATTERN = Pattern.compile("/BusServlet/update/(\\d+)/(\\d+)");
     private final Pattern DELETE_BUS_PATTERN = Pattern.compile("/BusServlet/delete/(\\d+)/(\\d+)");
+
 
     public BusServlet(){
         dao = new Dao();
@@ -39,6 +40,7 @@ public class BusServlet extends HttpServlet {
         if ((match = ADD_BUS_PATTERN.matcher(url)).matches() == true) {
             int id = Integer.parseInt(match.group(1));
             dispatcher = request.getRequestDispatcher(ADD_BUS);
+            request.setAttribute("models", Bus.Model.values());
             request.setAttribute("garage", dao.getGarage(id));
             dispatcher.forward(request, response);
         }
@@ -47,6 +49,7 @@ public class BusServlet extends HttpServlet {
             int garageId = Integer.parseInt(match.group(2));
             Bus bus = dao.getBus(id);
             request.setAttribute("bus", bus);
+            request.setAttribute("models", Bus.Model.values());
             request.setAttribute("garage", dao.getGarage(garageId));
             dispatcher = request.getRequestDispatcher(UPDATE_BUS);
             dispatcher.forward(request, response);
@@ -76,6 +79,7 @@ public class BusServlet extends HttpServlet {
         Bus bus = new Bus();
         bus.setModel( Bus.Model.valueOf(request.getParameter( "model" )) );
         bus.setIndentificationNumber( request.getParameter( "indentificationNumber" ) );
+        boolean check = dao.checkUniq(bus.getIndentificationNumber());
         bus.setDataConstruction( LocalDate.parse(request.getParameter( "dataConstruction" )) );
         bus.setCapacity( Integer.parseInt( request.getParameter( "capacity" ) ) );
 
@@ -94,8 +98,17 @@ public class BusServlet extends HttpServlet {
 
         if((match = ADD_BUS_PATTERN.matcher(url)).matches() == true){
             int garageId = Integer.parseInt(match.group(1));
-
-                dao.addBus(bus, garageId);
+                if(check==false)
+                {
+                    dao.addBus(bus, garageId);
+                }
+                else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(ERROR);
+                    request.setAttribute("errorMessage", "This identification number is already in use." +
+                            "Please take another!");
+                    request.setAttribute("garage", dao.getGarage(garageId));
+                    dispatcher.forward(request, response);
+                }
                 RequestDispatcher dispatcher = request.getRequestDispatcher( GET_BUSES_OF_GARAGE );
                 request.setAttribute("buses", dao.getBusesOfGarage(garageId));
                 request.setAttribute("garage", dao.getGarage(garageId));

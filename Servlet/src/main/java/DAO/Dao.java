@@ -57,6 +57,16 @@ public class Dao {
         }
         return garage;
     }
+    public boolean checkUniq(String indentificationNumber){
+        try {
+          return mySQLBusApp.checkUniq(indentificationNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public void deleteGarageWithBuses(int id){
         try {

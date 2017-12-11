@@ -37,8 +37,12 @@
                         </td>
 
                         <td>
-                            <input type="text" placeholder="enter model" name="model"
-                            required value="<c:out value="${bus.model}"/>">
+                            <select required name="model">
+                                <option></option>
+                            <c:forEach items="${models}" var="models">
+                                <option>${models}</option>
+                            </c:forEach>
+                            </select>
                         </td>
 
                         <td>
@@ -48,7 +52,7 @@
 
                         <td>
                             <input type="date" placeholder="construction date" name="dataConstruction"
-                            max="<%=LocalDate.now()%>" title="Date can`t be higher than today!"
+                            max="<%=LocalDate.now()%>"
                             required value="<c:out value="${bus.dataConstruction}"/>">
                         </td>
                     </tr>
