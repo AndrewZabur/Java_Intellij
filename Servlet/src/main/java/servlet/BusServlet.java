@@ -72,7 +72,6 @@ public class BusServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MySQLBusApp mySQLBusApp = new MySQLBusApp();
         String url = request.getRequestURI();
         Bus bus = new Bus();
         bus.setModel( Bus.Model.valueOf(request.getParameter( "model" )) );
