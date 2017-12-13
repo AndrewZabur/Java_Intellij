@@ -50,7 +50,7 @@
                    <td>
                         <input type="date"  placeholder="construction date" name="dataConstruction"
                         max="<%=LocalDate.now()%>"
-                        required value="${bus.dataConstruction}">
+                        required <%--value="--%>${bus.dataConstruction}<%--"--%>>
                     </td>
                </tr>
                </tbody>

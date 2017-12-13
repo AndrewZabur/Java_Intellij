@@ -9,6 +9,7 @@ public class SerializeGarageTxt implements Serializing<Garage> {
 
     @Override
     public void serializingObj(Garage obj, Writer out) throws IOException {
+        //out.write(obj.getBuses().size());
         out.write(obj.formString());
         out.flush();
         out.close();

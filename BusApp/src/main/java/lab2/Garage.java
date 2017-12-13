@@ -17,7 +17,7 @@ public class Garage {
 
     private final static String ADRESS_PATTERN = "adress=([A-Z][a-z]{1,}\\s[a-z]{1,}\\.\\s\\d{1,}\\-[A-Z])";
     private final static String OWNER_PATTERN = "owner=([A-Z][a-z]{1,}\\s[A-Z][a-z]{1,}\\s[A-Z][a-z]{1,})";
-
+    private final static String SIZE_PATTERN = "count=(\\d+)";
     public Garage(){
 
     }
@@ -151,6 +151,9 @@ public class Garage {
 
     public String formString() {
         StringBuilder str = new StringBuilder();
+        str.append("count=");
+        str.append(this.buses.size());
+        str.append("\n");
         str.append("adress=");
         str.append(this.adress);
         str.append("\n");
@@ -172,13 +175,17 @@ public class Garage {
     public Garage fromString(String[] str){
         Pattern pattern1 = Pattern.compile(ADRESS_PATTERN);
         Pattern pattern2 = Pattern.compile(OWNER_PATTERN);
+        Pattern pattern3 = Pattern.compile(SIZE_PATTERN);
         Matcher match;
         String[] tmp = new String[4];
-        Bus bus = new Bus();
+
         ArrayList<Bus> buses1 = new ArrayList<>();
-        int i;
-        for(i = 0; i < 3; i++)
+        int i, k = 0, size = 0;
+        for(i = 0; i < 4; i++)
         {
+            if((match = pattern3.matcher(str[i])).matches() == true){
+                size = Integer.parseInt(match.group(1));
+            }
             if((match = pattern1.matcher(str[i])).matches() == true){
                 this.adress = match.group(1);
             }
@@ -186,6 +193,7 @@ public class Garage {
                 this.owner = match.group(1);
             }
         }
+        Bus[] bus = new Bus[size];
         while (true){
             if(str[i].equals("]")){
                 break;
@@ -194,10 +202,11 @@ public class Garage {
                 tmp[j] = str[i];
                 i++;
             }
-
-            bus.fromString(tmp);
-            buses1.add(bus);
+            bus[k] = new Bus();
+            bus[k].fromString(tmp);
+            buses1.add(bus[k]);
             this.setBuses(buses1);
+            k++;
         }
         return this;
     }
