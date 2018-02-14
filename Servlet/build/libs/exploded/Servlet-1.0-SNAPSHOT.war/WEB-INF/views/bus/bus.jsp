@@ -30,21 +30,7 @@
     Owner: ${garage.owner}
     <br>Address: ${garage.adress}
 </p>
-<%--<table border=1 class="table table-condensed">
-    <thead>
-    <tr style="background-color: aqua">
-        <th>Owner</th>
-        <th>Address</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td style="text-align: center">${garage.owner}</td>
-        <td style="text-align: center">${garage.adress}</td>
-    </tr>
-    </tbody>
-</table>--%>
-<table border=1 class="table table-condensed">
+<table border=1 class="table table-condensed table-hover">
 
     <thead>
     <tr style="background-color: aqua">

@@ -19,7 +19,7 @@
 <form method="post">
     <form action="/BusServlet/update/${bus.id}/${garage.id}" method="post">
         <fieldset>
-           <table border=1  class="table table-condensed">
+           <table border=1  class="table table-condensed table-hover">
                <thead>
                    <tr>
                        <th>Identification Number</th>
@@ -50,7 +50,7 @@
                    <td>
                         <input type="date"  placeholder="construction date" name="dataConstruction"
                         max="<%=LocalDate.now()%>"
-                        required <%--value="--%>${bus.dataConstruction}<%--"--%>>
+                        required value="${bus.dataConstruction}">
                     </td>
                </tr>
                </tbody>

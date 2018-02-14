@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<table border=1  class="table table-condensed">
+<table border=1  class="table table-condensed table-hover">
     <thead>
     <tr>
         <th>Owner</th>

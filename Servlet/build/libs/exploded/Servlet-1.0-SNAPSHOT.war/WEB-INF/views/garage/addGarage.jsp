@@ -17,7 +17,7 @@
 <form  method="post">
     <form action="/GarageServlet/insert" method="post">
         <fieldset>
-            <table border=1  class="table table-condensed">
+            <table border=1  class="table table-condensed table-hover">
                 <thead>
                 <tr>
                     <th>Owner</th>
@@ -42,7 +42,7 @@
             </table>
         </fieldset>
 
-        <input type="submit" value="Add garage" />
+        <input  type="submit" value="Add garage" />
     </form>
 </form>
 </body>

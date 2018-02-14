@@ -19,7 +19,7 @@
 <form method="post">
     <form action="/BusServlet/update/${bus.id}/${garage.id}" method="post">
         <fieldset>
-           <table border=1  class="table table-condensed">
+           <table border=1  class="table table-condensed table-hover">
                <thead>
                    <tr>
                        <th>Identification Number</th>
